@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Meridian — Harness Lab</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="ambient" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="brand" href="/" aria-label="Meridian Harness Lab"><span class="brand-mark">m<span>·</span></span><span>meridian<span class="brand-sub">HARNESS LAB</span></span></a>
+  <div class="top-center"><span class="live-dot" id="connection-dot"></span><span id="model-label">Connecting to local server</span><button class="text-button" id="test-connection">Test connection</button></div>
+  <div class="header-actions"><button class="outline-button" id="focus-mode">Focus demo</button><button class="icon-button" id="motion" title="Toggle reduced motion" aria-label="Toggle reduced motion">◌</button><button class="icon-button" id="fullscreen" title="Fullscreen" aria-label="Fullscreen">⛶</button><button class="outline-button" id="presenter-toggle">Presenter notes</button></div>
+</header>
+<main>
+<section class="intro"><div><p class="eyebrow">AN AGENT, BUILT ONE LAYER AT A TIME</p><h1>The harness makes it work<span>.</span></h1><p class="intro-copy">Same model. New capabilities. Watch the system change.</p></div><div class="session-badge"><span>LIVE WORKSHOP</span><strong>45<span>min</span></strong><small>Python + your model</small></div></section>
+<nav class="stage-nav" id="stages" aria-label="Harness stages"></nav>
+<section class="workspace">
+  <aside class="lesson-pane">
+    <div class="lesson-top"><span class="stage-index" id="stage-index">00</span><span class="eyebrow" id="stage-tag"></span></div>
+    <h2 id="stage-title"></h2><p id="stage-why"></p>
+    <div class="capability-stack" id="capabilities" aria-label="Enabled components"></div>
+    <div class="lesson-controls"><button class="primary-button" id="reveal-code">Reveal code <span>↗</span></button><button class="outline-button" id="next-stage">Next layer →</button></div>
+    <div class="scenario"><span class="eyebrow">TRY THIS SCENARIO</span><p id="scenario-text"></p><button class="text-button" id="use-scenario">Use this prompt ↗</button></div>
+    <div class="observe"><span>◎</span><p id="observe-text"></p></div>
+    <div class="presenter-notes" id="presenter-notes" hidden></div>
+  </aside>
+  <section class="app-pane" aria-label="Live agent workspace">
+    <div class="app-toolbar"><div class="workspace-title"><span class="mini-mark">m.</span><div><strong>Meridian workspace</strong><small id="task-label">New task</small></div></div><div class="app-actions"><label class="role-control">Role<select id="role"><option>Sales</option><option>Engineering</option><option>Finance</option></select></label><button class="icon-button" id="new-task" aria-label="New task" title="New task">＋</button></div></div>
+    <div class="tab-row" role="tablist"><button class="active" role="tab" aria-selected="true" data-tab="conversation">Conversation</button><button role="tab" aria-selected="false" data-tab="artifacts">Artifacts <span id="artifact-count">0</span></button><button role="tab" aria-selected="false" data-tab="history">Saved tasks</button><button role="tab" aria-selected="false" data-tab="checks">Checks</button></div>
+    <div class="tab-content active" id="tab-conversation"><div id="chat" aria-live="polite"></div><div class="approval-card" id="approval-card" hidden></div><form id="prompt-form"><label for="prompt" class="sr-only">Message the agent</label><textarea id="prompt" rows="2" placeholder="Ask Meridian to help with a task…"></textarea><div class="composer-bottom"><span id="composer-hint">Real model responses · synthetic company data</span><button class="send-button" id="send" type="submit" aria-label="Send message">↑</button></div></form></div>
+    <div class="tab-content" id="tab-artifacts"><div class="panel-header"><h3>Work you can inspect</h3><span>Artifacts and local outbox</span></div><div id="artifacts"></div></div>
+    <div class="tab-content" id="tab-history"><div class="panel-header"><h3>Pick up where you left off</h3><span>Available from the Persistence stage</span></div><div id="history"></div><button class="outline-button" id="compact">Compact this task’s context</button></div>
+    <div class="tab-content" id="tab-checks"><div class="panel-header"><h3>Evidence, not impressions</h3><span>Contract tests and live model checks are different.</span></div><button class="primary-button" id="run-checks">Run 5 contract checks</button><p class="muted">These execute actual Python policy and storage code in an isolated temporary database. No model calls.</p><div id="checks"></div><div class="live-check"><h4>Live grounding smoke test</h4><p>Runs a fresh task using the configured model. Checks tool use, record citation, and an approval qualifier. This narrow check is not a reliability benchmark.</p><button class="outline-button" id="live-check">Run with live model</button><div id="live-check-result"></div></div></div>
+    <div class="statusbar"><span id="run-status"><i></i>Ready</span><span id="call-count">0 calls</span><span id="token-count">0 tokens</span><button class="text-button" id="export-trace">Export trace</button></div>
+  </section>
+  <aside class="trace-pane"><div class="trace-header"><div><span class="eyebrow">UNDER THE HOOD</span><h3>Execution trace</h3></div><span class="trace-count" id="trace-count">0</span></div><p class="trace-caption">Actual events from the Python harness</p><div class="flow-map" id="flow-map"><span data-node="context">Context</span><i></i><span data-node="model">Model</span><i></i><span data-node="tool">Tools</span></div><div id="trace" aria-live="polite"></div></aside>
+</section>
+<footer><span>All company records are synthetic. Outbox actions stay local.</span><span>← → Navigate layers <b>·</b> C Code <b>·</b> N Notes <b>·</b> Esc Close</span></footer>
+</main>
+<dialog id="code-dialog"><div class="dialog-header"><div><p class="eyebrow">THE IMPLEMENTATION</p><h2 id="code-title"></h2></div><button class="icon-button close-code" aria-label="Close code">×</button></div><p class="code-caption">This is the actual Python function running in this demo.</p><div class="code-file"><span id="code-file"></span><button class="text-button" id="copy-code">Copy</button></div><pre><code id="code-body"></code></pre><div class="dialog-footer"><span>Explain the change. Close this view. Run the scenario.</span><button class="primary-button close-code">Try it live →</button></div></dialog>
+<dialog id="detail-dialog"><div class="dialog-header"><h2 id="detail-title"></h2><button class="icon-button" id="close-detail" aria-label="Close detail">×</button></div><div id="detail-body"></div></dialog>
+<div class="toast" id="toast" role="status"></div>
+<script src="app.js"></script></body></html>
